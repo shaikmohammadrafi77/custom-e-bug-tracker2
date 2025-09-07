@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Projects</h2>
+
+{% if projects %}
+  <ul>
+    {% for project in projects %}
+      <li>
+        <h3>{{ project.name }}</h3>
+        <p>{{ project.description }}</p>
+        <p>Created on: {{ project.created_at.strftime('%Y-%m-%d') }}</p>
+        <p>Bugs: {{ project.bugs|length }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You haven't created any projects yet. <a href="{{ url_for('project.create_project') }}">Create your first project</a>.</p>
+{% endif %}
+{% endblock %}
+

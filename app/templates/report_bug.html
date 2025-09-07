@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Report a Bug</h2>
+<form method="POST" action="{{ url_for('bug.report_bug') }}">
+  <div>
+    <label for="title">Bug Title:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div>
+    <label for="project_id">Project:</label>
+    <select id="project_id" name="project_id" required>
+      <option value="">Select a project</option>
+      {% for project in projects %}
+        <option value="{{ project.id }}">{{ project.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="severity">Severity:</label>
+    <select id="severity" name="severity" required>
+      <option value="Low">Low</option>
+      <option value="Medium" selected>Medium</option>
+      <option value="High">High</option>
+      <option value="Critical">Critical</option>
+    </select>
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" rows="4" required></textarea>
+  </div>
+  <div>
+    <label for="code_snippet">Code Snippet (Optional):</label>
+    <textarea id="code_snippet" name="code_snippet" rows="6" placeholder="Paste the problematic code here"></textarea>
+  </div>
+  <button type="submit">Submit Bug Report</button>
+</form>
+{% endblock %}
+

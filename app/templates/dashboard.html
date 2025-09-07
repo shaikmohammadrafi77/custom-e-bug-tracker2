@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<div class="stats">
+  <div class="stat-card">
+    <h3>{{ total_bugs }}</h3>
+    <p>Total Bugs</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ open_bugs }}</h3>
+    <p>Open Bugs</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ fixed_bugs }}</h3>
+    <p>Fixed Bugs</p>
+  </div>
+  <div class="stat-card">
+    <h3>{{ total_projects }}</h3>
+    <p>Projects</p>
+  </div>
+</div>
+
+<h3>Recent Bugs</h3>
+{% if recent_bugs %}
+  <ul>
+    {% for bug in recent_bugs %}
+      <li>
+        <a href="{{ url_for('bug.bug_detail', bug_id=bug.id) }}">{{ bug.title }}</a> - 
+        {{ bug.project.name }} - 
+        <span class="status {{ bug.status|lower }}">{{ bug.status }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No bugs reported yet.</p>
+{% endif %}
+
+<div class="quick-actions">
+  <a href="{{ url_for('bug.report_bug') }}" class="button">Report New Bug</a>
+  <a href="{{ url_for('project.create_project') }}" class="button">Create New Project</a>
+</div>
+{% endblock %}

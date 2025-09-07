@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Bug Details: {{ bug.title }}</h2>
+
+<div class="bug-info">
+  <p><strong>Project:</strong> {{ bug.project.name }}</p>
+  <p><strong>Status:</strong> <span class="status {{ bug.status|lower }}">{{ bug.status }}</span></p>
+  <p><strong>Severity:</strong> <span class="severity {{ bug.severity|lower }}">{{ bug.severity }}</span></p>
+  <p><strong>Reported on:</strong> {{ bug.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+</div>
+
+<div class="description">
+  <h3>Description</h3>
+  <p>{{ bug.description }}</p>
+</div>
+
+{% if bug.code_snippet %}
+<div class="code-section">
+  <h3>Original Code</h3>
+  <pre><code>{{ bug.code_snippet }}</code></pre>
+</div>
+{% endif %}
+
+{% if bug.fixed_code %}
+<div class="code-section">
+  <h3>AI-Fixed Code</h3>
+  <pre><code>{{ bug.fixed_code }}</code></pre>
+  <a href="{{ url_for('bug.download_fixed_code', bug_id=bug.id) }}" class="button">Download Fixed Code</a>
+</div>
+
+<div class="ai-notes">
+  <h3>AI Analysis Notes</h3>
+  <p>{{ bug.ai_notes }}</p>
+</div>
+{% else %}
+<p>This bug hasn't been processed by our AI engine yet.</p>
+{% endif %}
+
+<a href="{{ url_for('bug.bug_list') }}">Back to Bug List</a>
+{% endblock %}

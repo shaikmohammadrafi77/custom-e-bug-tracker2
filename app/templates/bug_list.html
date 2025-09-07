@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>My Reported Bugs</h2>
+
+{% if bugs %}
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Project</th>
+        <th>Status</th>
+        <th>Severity</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bug in bugs %}
+        <tr>
+          <td>{{ bug.title }}</td>
+          <td>{{ bug.project.name }}</td>
+          <td><span class="status {{ bug.status|lower }}">{{ bug.status }}</span></td>
+          <td><span class="severity {{ bug.severity|lower }}">{{ bug.severity }}</span></td>
+          <td>{{ bug.created_at.strftime('%Y-%m-%d') }}</td>
+          <td>
+            <a href="{{ url_for('bug.bug_detail', bug_id=bug.id) }}">View</a>
+            {% if bug.fixed_code %}
+              <a href="{{ url_for('bug.download_fixed_code', bug_id=bug.id) }}">Download Fix</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>You haven't reported any bugs yet. <a href="{{ url_for('bug.report_bug') }}">Report your first bug</a>.</p>
+{% endif %}
+{% endblock %}
+
+
