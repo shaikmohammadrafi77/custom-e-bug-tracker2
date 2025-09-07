@@ -16,5 +16,5 @@ A modern bug tracking system with AI-powered code analysis and fixes.
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/shaikmohammadrafi77/custom-e-bug-tracker2.git
 cd e-bug-tracker
